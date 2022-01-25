@@ -15,10 +15,9 @@
 <?php
 
 include '../database/conection.php';
-$conexion = getconection();
 
-function guardar_usuario($nombres, $apellidos, $numeroidentificacion , $fechanacimiento, $sexo, $correoelectronico, $numerotelefono, $cargo) {
-    global $conexion;
+function guardar_usuario($nombres, $apellidos, $numeroidentificacion, $fechanacimiento, $sexo, $correoelectronico, $numerotelefono, $cargo) {
+    $conexion = getconection();
     if(!($nombres && $apellidos && $fechanacimiento && $sexo && $correoelectronico && $numerotelefono && $cargo)){
         echo "<script>swal('','Todos los parametros son requeridos','info');</script>";
        return false; 
@@ -37,5 +36,30 @@ function guardar_usuario($nombres, $apellidos, $numeroidentificacion , $fechanac
     
     return false;
 }
-guardar_usuario("","","","","","","","");
+
+function buscar_usuarios() {
+    global $conexion;
+
+    $sql = "SELECT nombres, apellidos, numeroidentificacion, fechanacimiento, sexo, correoelectronico, numerotelefono, cargo FROM usuario;";
+
+    $resultado = mysqli_query($conexion, $sql) or die ("<script>swal('','Error al tratar de acceder a los usuarios','error');</script>");
+
+    mysqli_close($conexion);
+    
+    return $resultado;
+}
+
+function buscar_usuario($numeroidentificacion) {
+    global $conexion;
+
+    $sql = "SELECT nombres, apellidos, numeroidentificacion, fechanacimiento, sexo, correoelectronico, numerotelefono, cargo FROM usuario WHERE numeroidentificacion='$numeroidentificacion';";
+
+    $resultado = mysqli_query($conexion, $sql) or die ("<script>swal('','Error al tratar de acceder a los usuarios','error');</script>");
+
+    mysqli_close($conexion);
+    
+    return $resultado;
+}
+
+
 ?>
