@@ -38,7 +38,7 @@ function guardar_usuario($nombres, $apellidos, $numeroidentificacion, $fechanaci
 }
 
 function buscar_usuarios() {
-    global $conexion;
+    $conexion = getconection();
 
     $sql = "SELECT nombres, apellidos, numeroidentificacion, fechanacimiento, sexo, correoelectronico, numerotelefono, cargo FROM usuario;";
 
@@ -50,7 +50,7 @@ function buscar_usuarios() {
 }
 
 function buscar_usuario($numeroidentificacion) {
-    global $conexion;
+    $conexion = getconection();
 
     $sql = "SELECT nombres, apellidos, numeroidentificacion, fechanacimiento, sexo, correoelectronico, numerotelefono, cargo FROM usuario WHERE numeroidentificacion='$numeroidentificacion';";
 
@@ -61,5 +61,21 @@ function buscar_usuario($numeroidentificacion) {
     return $resultado;
 }
 
+function eliminar_usuario($numeroidentificacion) {
+    $conexion = getconection();
+
+    $sql = "DELETE FROM usuario WHERE numeroidentificacion='$numeroidentificacion';";
+
+    $resultado = mysqli_query($conexion, $sql) or die ("<script>swal('','Error al tratar de acceder a los usuarios','error');</script>");
+
+    mysqli_close($conexion);
+    
+    if ($resultado == 1){
+        echo "<script>swal('','Usuario eliminado con exito','success');</script>";
+        return true;
+    };
+    
+    return false;
+}
 
 ?>
