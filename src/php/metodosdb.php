@@ -78,4 +78,21 @@ function eliminar_usuario($numeroidentificacion) {
     return false;
 }
 
+function editar_usuario($nombres, $apellidos, $numeroidentificacion, $fechanacimiento, $sexo, $correoelectronico, $numerotelefono, $cargo) {
+    $conexion = getconection();
+
+    $sql = "UPDATE usuario SET nombres='$nombres',apellidos='$apellidos',numeroidentificacion='$numeroidentificacion',fechanacimiento='$fechanacimiento',sexo='$sexo',correoelectronico='$correoelectronico',numerotelefono='$numerotelefono',cargo='$cargo' WHERE numeroidentificacion='$numeroidentificacion';";
+
+    $resultado = mysqli_query($conexion, $sql) or die ("<script>swal('','Error al tratar de acceder a los usuarios','error');</script>");
+
+    mysqli_close($conexion);
+    
+    if ($resultado == 1){
+        echo "<script>swal('','Usuario eliminado con exito','success');</script>";
+        return true;
+    };
+    
+    return false;
+}
+
 ?>
