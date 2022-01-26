@@ -18,7 +18,7 @@ include '../database/conection.php';
 
 function guardar_usuario($nombres, $apellidos, $numeroidentificacion, $fechanacimiento, $sexo, $correoelectronico, $numerotelefono, $cargo) {
     $conexion = getconection();
-    if(!($nombres && $apellidos && $fechanacimiento && $sexo && $correoelectronico && $numerotelefono && $cargo)){
+    if(!($nombres && $apellidos && $numeroidentificacion && $fechanacimiento && $sexo && $correoelectronico && $numerotelefono && $cargo)){
         echo "<script>swal('','Todos los parametros son requeridos','info');</script>";
        return false; 
     }
