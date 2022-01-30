@@ -32,8 +32,8 @@ function obtener_datos (){
        return; 
     }
 
-    guardar_usuario($nombres, $apellidos, $numeroidentificacion, $fechanacimiento, $sexo, $correoelectronico, $numerotelefono, $cargo);
-   
+    $a13123 = guardar_usuario($nombres, $apellidos, $numeroidentificacion, $fechanacimiento, $sexo, $correoelectronico, $numerotelefono, $cargo);
+    echo $a13123;
 }
 
 obtener_datos();

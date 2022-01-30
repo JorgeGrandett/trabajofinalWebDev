@@ -17,24 +17,28 @@
 include '../database/conection.php';
 
 function guardar_usuario($nombres, $apellidos, $numeroidentificacion, $fechanacimiento, $sexo, $correoelectronico, $numerotelefono, $cargo) {
-    $conexion = getconection();
-    if(!($nombres && $apellidos && $numeroidentificacion && $fechanacimiento && $sexo && $correoelectronico && $numerotelefono && $cargo)){
-        echo "<script>swal('','Todos los parametros son requeridos','info');</script>";
-       return false; 
-    }
+    try {
+        $conexion = getconection();
+        if(!($nombres && $apellidos && $numeroidentificacion && $fechanacimiento && $sexo && $correoelectronico && $numerotelefono && $cargo)){
+            echo "<script>swal('','Todos los parametros son requeridos','info');</script>";
+        return false; 
+        }
 
-    $sql = "INSERT INTO usuario (nombres, apellidos, numeroidentificacion, fechanacimiento, sexo, correoelectronico, numerotelefono, cargo) VALUES ('$nombres', '$apellidos', '$numeroidentificacion', '$fechanacimiento', '$sexo', '$correoelectronico', '$numerotelefono', '$cargo');";
+        $sql = "INSERT INTO usuario (nombres, apellidos, numeroidentificacion, fechanacimiento, sexo, correoelectronico, numerotelefono, cargo) VALUES ('$nombres', '$apellidos', '$numeroidentificacion', '$fechanacimiento', '$sexo', '$correoelectronico', '$numerotelefono', '$cargo');";
 
-    $resultado = mysqli_query($conexion, $sql) or die ("<script>swal('','Error al tratar de crear el usuario','error');</script>");
+        $resultado = mysqli_query($conexion, $sql) or die ("<script>swal('','Error al tratar de crear el usuario','error');</script>");
 
-    mysqli_close($conexion);
+        mysqli_close($conexion);
 
-    if ($resultado == 1){
-        echo "<script>swal('','Usuario creado con exito','success');</script>";
-        return true;
-    };
-    
-    return false;
+        if ($resultado == 1){
+            echo "<script>swal('','Usuario creado con exito','success');</script>";
+            return true;
+        };
+        
+        return false;
+    } catch (\Throwable $th) {
+        echo "<script>swal('','Fatal error','success');</script>";
+    } 
 }
 
 function buscar_usuarios() {
