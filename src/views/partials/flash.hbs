@@ -1,0 +1,34 @@
+{{#if flash/enable}}
+<section class="flash-message" id="flash-message">
+    <section class="flash-background">
+        {{#if flash/err}}
+        <section class="flash-title flash-error">
+            <h1>¡Error!</h1>
+        </section>
+        <section class="flash-body">
+            <p>{{flash/err}}</p>
+        </section>
+        {{/if}}
+        {{#if flash/inf}}
+        <section class="flash-title">
+            <h1>¡Information!</h1>
+        </section>
+        <section class="flash-body">
+            <p>{{flash/inf}}</p>
+        </section>
+        {{/if}}
+        {{#if flash/scs}}
+        <section class="flash-title flash-success">
+            <h1>¡Success!</h1>
+        </section>
+        <section class="flash-body">
+            <p>{{flash/scs}}</p>
+        </section>
+        {{/if}}
+        <section class="flash-btn">
+            <button type="button" onclick="flashCloseWindow()">Closse</button>
+        </section>
+    </section>
+    <script src="partials/flash.js"></script>
+</section>
+{{/if}}
