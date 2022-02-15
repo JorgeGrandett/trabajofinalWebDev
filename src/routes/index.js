@@ -1,11 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-router.use(require('./auth/login'));
+const auth = require('./../lib/auth');
 
-router.get('/', (req, res) => {
-    console.log('test');
-    res.send('test');
+router.use(require('./auth/login'));
+router.use(require('./auth/register'));
+router.use(require('./auth/logout'));
+
+router.use(require('./panel'));
+router.use(require('./newMeeting'));
+
+router.get('/', auth.isNotLoggedIn, (req, res) => {
+    res.render('pages/index');
 });
 
 module.exports = router;

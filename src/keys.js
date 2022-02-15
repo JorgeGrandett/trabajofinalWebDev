@@ -1,9 +1,9 @@
 module.exports = { 
     database: {
-        host: '192.168.20.28',
+        host: '192.168.20.20',
         port: '3306',
-        user: 'proyectoWebDev',
-        password: 'proyectoWebDev123',
+        user: 'actasunicordoba',
+        password: 'actasunicordoba',
         database: 'actasunicordoba'
     }
 };

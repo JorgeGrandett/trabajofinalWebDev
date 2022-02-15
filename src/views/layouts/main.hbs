@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clothes Designer</title>
+    <title></title>
     <link rel="stylesheet" href="/css/master.css" type="text/css">
-    <link rel="stylesheet" href="{{{stylesheet}}}" type="text/css">
-    <link rel="stylesheet" href="/partials/flash/master.css" type="text/css">
+    {{#if stylesheet}}<link rel="stylesheet" href="/css/{{{stylesheet}}}" type="text/css">{{/if}}
+    <link rel="stylesheet" href="/partials/flash
+    .css" type="text/css">
 </head>
 <body id="body">
-    {{>flash/flash}}
     {{{ body }}}
     <footer>
-        <p>This project is below GPL 3.0 license ot later</p>
+        <p>Esta web es usada para con fines educativos y solo para dicho fin.</p>
+        <p>This website is used for educational purposes and for that purpose only.</p>
+        <p>This project is below MIT Licence</p>
         <script src="/partials/flash/main.js"></script>
-        {{#if script}}<script src="{{{script}}}"></script>{{/if}}
+        {{#if script}}<script src="/js/{{{script}}}"></script>{{/if}}
         <script src="/js/main.js"></script>
     </footer>
 </body>

@@ -1,0 +1,45 @@
+<section>
+    <h1>opciones</h1>
+    <button onclick="window.location.href='/auth/logout'">Cerrar sesión</button>
+    <button onclick="window.location.href='/new-meeting'">Nueva reunión</button>
+</section>
+{{#if reunion}}
+<section>
+    <h1>Reunión</h1>
+    <table>
+        <tr>
+            <th>organizador</th>
+            <th>fecha</th>
+            <th>Asistentes</th>
+            <th>notas</th>
+        </tr>
+        <tr>
+            <td>{{reunion/0/organizer}}</td>
+            <td>{{reunion/0/datatime}}</td>
+            <td>{{reunion/0/assistants}}</td>
+            <td>{{reunion/0/notes}}</td>
+        </tr>
+    </table>
+</section>
+{{/if}}
+{{#if puntos}}
+<section>
+    <h1>Puntos de acción</h1>
+    <table>
+        <tr>
+            <th>Tareas</th>
+            <th>fecha</th>
+            <th>Progreso</th>
+        </tr>
+        {{#if puntos}}
+        {{#each puntos}}
+        <tr>
+            <td>{{task}}</td>
+            <td>{{datetime}}</td>
+            <td>{{progress}}</td>
+        </tr>
+        {{/each}}
+        {{/if}}
+    </table>
+</section>
+{{/if}}

@@ -10,6 +10,7 @@ const morgan = require('morgan');
 const app =  express();
 const http = require('http').Server(app);
 require('./lib/passport');
+require('./lib/handlebars');
 
 // Settings
 app.set('port', 3000);
@@ -29,7 +30,7 @@ app.use(session({
     saveUninitialized: false
 }));
 app.use(flash());
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(passport.initialize());

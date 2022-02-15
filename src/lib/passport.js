@@ -4,60 +4,43 @@ const LocalStrategy = require('passport-local').Strategy;
 const pool = require('../database');
 const helpers = require('../lib/helpers');
 
-passport.use('local.singin', new LocalStrategy({
-    usernameField: 'username',
+passport.use('local.login', new LocalStrategy({
+    usernameField: 'userName',
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, username, password, done) => {
-    var row;
-    row = await pool.query('SELECT * FROM `clothes_designer_db`.`users` WHERE `username` = ?', [username.toLowerCase()]);
+    const row = await pool.query('SELECT * FROM actasunicordoba.users WHERE username = ?;', [username.toLowerCase()]);
     if (row.length > 0) {
         const user = row[0];
         const validPassword = await helpers.matchPassword(password, user.password);
         if (validPassword) {
-            row = await pool.query('SELECT `idpermit` FROM `clothes_designer_db`.`permits` WHERE `iduser` = ?', [user.iduser]);
-            if (!(row.length > 0)) {
-                const newPermits = {
-                    iduser: user.iduser,
-                    level: 0
-                };
-                await pool.query('INSERT INTO `clothes_designer_db`.`permits` SET ?', [newPermits]);
-            }
-            if (user.active) {
-                return done(null, user); 
-            } else {
-                return done(null, user, req.flash('info', 'Your account is not activated yet.'));
-            }
+            return done(null, user); 
         } else {
-            return done(null, false, req.flash('error', 'Incorrect password.'));
+            return done(null, false, req.flash('error', 'La contraseña es incorrecta.'));
         }
     } else {
-        return done(null, false, req.flash('error', 'The user does not exist.'));
+        return done(null, false, req.flash('error', 'El usuario no existe.'));
     }
 }));
 
-passport.use('local.singup', new LocalStrategy({
-    usernameField: 'username',
+passport.use('local.register', new LocalStrategy({
+    usernameField: 'userName',
     passwordField: 'password',
     passReqToCallback: true
 }, async (req, username, password, done) => {
-    if (req.body.passwordConfirm != password) return done(null, null, req.flash('error', 'The password not match.'));
-    // user account
-    const { firstname, lastname, email } = req.body;
+    console.log('iniciado');
+    const { firstName, lastName, confirm } = req.body;
+    if (password.toLowerCase() != confirm.toLowerCase()) return done(null, false, req.flash('error', 'Las contaseñas no coinciden.'));
     const newUser = {
+        firstname: firstName.toLowerCase(),
+        lastname: lastName.toLowerCase(),
         username: username.toLowerCase(),
-        firstname: firstname.toLowerCase(),
-        lastname: lastname.toLowerCase(),
-        email: email.toLowerCase()
+        password: await helpers.encryptPassword(password)
     };
-    let row;
-    row = await pool.query('SELECT `iduser` FROM `clothes_designer_db`.`users` WHERE `email` = ?', [newUser.email]);
-    if (row.length > 0) done(null, null, req.flash('error', 'The e-mail already exists.'));
-    row = await pool.query('SELECT `iduser` FROM `clothes_designer_db`.`users` WHERE `username` = ?', [newUser.username]);
-    if (row.length > 0) done(null, null, req.flash('error', 'The user already exists.'));
-    newUser.password = await helpers.encryptPassword(password);
-    newUser.active = false;
-    const result = await pool.query('INSERT INTO `clothes_designer_db`.`users` SET ?', [newUser]);
+    const row = await pool.query('SELECT * FROM actasunicordoba.users WHERE username = ?;', [newUser.username]);
+    if (row.length > 0) return done(null, false, req.flash('error', 'Ya se encuentra registrado ese nombre de usuario.'));
+    const result = await pool.query('INSERT INTO actasunicordoba.users SET ?', [newUser]);
+    console.log(result)
     newUser.iduser = result.insertId;
     return done(null, newUser);
 }));
@@ -67,6 +50,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (iduser, done) => {
-    const row = await pool.query('SELECT * FROM `clothes_designer_db`.`users` WHERE `iduser` = ?', [iduser]);
+    const row = await pool.query('SELECT * FROM actasunicordoba.users WHERE iduser = ?;', [iduser]);
     return done(null, row[0]);
 });

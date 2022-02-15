@@ -4,13 +4,13 @@ const router = express.Router();
 const auth = require('./../../lib/auth');
 const passport = require('passport');
 
-router.get('/auth/login', auth.isNotLoggedIn, (req, res) => {
-    res.render('pages/auth/login');
+router.get('/auth/register', auth.isNotLoggedIn, (req, res) => {
+    res.render('pages/auth/register');
 });
 
-router.post('/auth/login', auth.isNotLoggedIn, passport.authenticate('local.login', {
+router.post('/auth/register', auth.isNotLoggedIn, passport.authenticate('local.register', {
     successRedirect: '/panel',
-    failureRedirect: '/auth/login',
+    failureRedirect: '/auth/register',
     failureFlash: true
 }));
 

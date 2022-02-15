@@ -1,0 +1,27 @@
+<form action="/new-meeting" method="post">
+    <h1>Acta de reunión</h1>
+    <section class="item">
+        <label for="organizer">Organizador: </label>
+        <input type="text" class="organizer" id="organizer" name="organizer">
+    </section>
+    <section class="item">
+        <label for="datatime">Hora/fecha: </label>
+        <input type="datetime-local" class="datetime" id="datatime" name="datatime">
+    </section>
+    <section class="item">
+        <label for="assistants">Asistentets</label>
+        <input type="text" id="assistants" name="assistants">
+    </section>
+    <section class="item">
+        <label for="notes">Notas de reunión:</label><br>
+        <textarea name="notes" id="notes" ></textarea>
+    </section>
+    <section class="item">
+        <h2>puntos de acción</h2>
+        {{forCycle_actionspoints}}
+    </section>
+    <button type="submit">Subir Acta</button>
+</form>
+
+
+

@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs');
-const pool = require('./../database');
 const helpers = {};
 
 helpers.encryptPassword = async (password) => {
@@ -13,15 +12,6 @@ helpers.matchPassword = async (password, savedPassword) => {
         return await bcrypt.compare(password, savedPassword);
     } catch (e) {
         console.log(e);
-    }
-}
-
-helpers.getAvatarFilename = async (iduser) => {
-    const row = await pool.query('SELECT filename FROM ``.`` WHERE `iduser` = ?', [iduser]);
-    if (row.length > 0) {
-        return row[0].filename;
-    } else {
-        return false;
     }
 }
 

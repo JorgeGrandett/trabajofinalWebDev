@@ -1,0 +1,28 @@
+<section>
+    <h1>opciones</h1>
+    <button onclick="window.location.href='/auth/logout'">Cerrar sesión</button>
+    <button onclick="window.location.href='/new-meeting'">Nueva reunión</button>
+</section>
+{{#if items}}
+<section>
+    <h1>Reuniones</h1>
+    <table>
+        <tr>
+            <th>organizador</th>
+            <th>fecha</th>
+            <th>Asistentes</th>
+            <th>notas</th>
+            <th>Visualizacion</th>
+        </tr>
+    {{#each items}}
+        <tr>
+            <td>{{organizer}}</td>
+            <td>{{datatime}}</td>
+            <td>{{assistants}}</td>
+            <td>{{notes}}</td>
+            <td><a href="/panel/{{idmeeting}}">Ver reunión</a></td>
+        </tr>
+    {{/each}}
+    </table>
+</section>
+{{/if}}
